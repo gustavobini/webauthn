@@ -71,24 +71,32 @@ export default function Main() {
   });
 
   const handleWebAuthnRequest = async () => {
-    const credential = await navigator.credentials.create({
-      publicKey: {
-        challenge: publicKeyChallenge,
-        rp: {
-          name: 'bini webauthn',
-          id: 'webauthn.now.sh'
-        },
-        user: {
-          id: new Uint8Array(16),
-          email: state.email,
-          name: state.email,
-          displayName: state.email.split('@')[0]
-        },
-        pubKeyCredParams: [{ alg: -7, type: 'public-key' }],
-        timeout: 60000,
-        attestation: 'direct'
+    try {
+      const credential = await navigator.credentials.create({
+        publicKey: {
+          challenge: publicKeyChallenge,
+          rp: {
+            name: 'bini webauthn',
+            id: 'localhost'
+          },
+          user: {
+            id: new Uint8Array(16),
+            email: state.email,
+            name: state.email,
+            displayName: state.email.split('@')[0]
+          },
+          pubKeyCredParams: [{ alg: -7, type: 'public-key' }],
+          timeout: 60000,
+          attestation: 'direct'
+        }
+      });
+
+      console.log(credential);
+    } catch (error) {
+      if (error instanceof DOMException) {
+        // DOMException: The operation either timed out or was not allowed.
       }
-    });
+    }
   };
 
   const handleSubmit = event => {
