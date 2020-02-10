@@ -79,7 +79,7 @@ export default function Main() {
         });
       } else {
         const errorBody = await response.json();
-        alert(`${response.status} - ${errorBody}`);
+        alert(`${response.status} - ${JSON.parse(errorBody)}`);
         dispatch({
           type: actionEnum.registrationError
         });
