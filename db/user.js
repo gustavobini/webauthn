@@ -27,11 +27,9 @@ export async function findByChallenge(challenge) {
 }
 
 export async function addKeyToUser({ user, key }) {
-  const dbResponse = await dbClient().query(
-    q.Update(q.Ref(q.Collection('user'), user.id), {
-      data: { key }
-    })
-  );
+  const dbResponse = await dbClient().query(user.ref, {
+    data: { key }
+  });
 
   console.log(dbResponse);
 }
