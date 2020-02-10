@@ -1,9 +1,16 @@
-import webAuthnServer from '../../relying-party/webauthn-server';
+import { parseRegisterRequest } from '@webauthn/server';
+import { findByChallenge, addKeyToUser } from '../../db/user';
 
 export default (req, res) => {
-  webAuthnServer.register({});
+  const { key, challenge } = parseRegisterRequest(req.body);
 
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'application/json');
-  res.end(JSON.stringify({ name: 'John Doe' }));
+  const user = findByChallenge(challenge);
+
+  if (!user) {
+    return res.status(400);
+  }
+
+  addKeyToUser(user, key);
+
+  res.status(200);
 };

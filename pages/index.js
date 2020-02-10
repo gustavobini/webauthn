@@ -99,13 +99,26 @@ export default function Main() {
     }
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault();
 
-    dispatch({
-      type: actionEnum.registrationSubmitted,
-      email: inputEmailRef.current.value
+    const response = await fetch('/api/request-register', {
+      method: 'POST',
+      body: JSON.stringify({
+        id: new Date().valueOf().toString(),
+        email: inputEmailRef.current.value
+      })
     });
+
+    if (!response.ok) {
+      console.error(response);
+    } else {
+      console.log(response);
+      dispatch({
+        type: actionEnum.registrationSubmitted,
+        email: inputEmailRef.current.value
+      });
+    }
   };
 
   return (
