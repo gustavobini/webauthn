@@ -78,7 +78,7 @@ export default function Main() {
           type: actionEnum.registrationCompleted
         });
       } else {
-        alert(response.status - response.statusText);
+        alert(`${response.status} - ${response.statusText}`);
         dispatch({
           type: actionEnum.registrationError
         });
