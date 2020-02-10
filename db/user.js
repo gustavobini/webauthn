@@ -28,7 +28,7 @@ export async function findByChallenge(challenge) {
 
 export async function addKeyToUser({ user, key }) {
   const dbResponse = await dbClient().query(
-    q.Update(q.Ref(q.Collection('user'), user.id), {
+    q.Update(q.Get(q.Match(q.Index('users_by_challenge'), user.challenge)), {
       data: { key }
     })
   );
