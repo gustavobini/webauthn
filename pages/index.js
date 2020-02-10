@@ -92,23 +92,31 @@ export default function Main() {
   const handleSubmit = async event => {
     event.preventDefault();
 
-    const response = await fetch('/api/request-register', {
+    // const response = await fetch('/api/request-register', {
+    //   method: 'POST',
+    //   body: JSON.stringify({
+    //     email: inputEmailRef.current.value
+    //   })
+    // });
+
+    const response1 = await fetch('/api/register', {
       method: 'POST',
       body: JSON.stringify({
-        email: inputEmailRef.current.value
+        key: 'abc',
+        challenge: 'def'
       })
     });
 
-    if (response.ok) {
-      const challenge = await response.json();
+    // if (response.ok) {
+    //   const challenge = await response.json();
 
-      dispatch({
-        type: actionEnum.registrationRequested,
-        challenge
-      });
-    } else {
-      console.error(response);
-    }
+    //   dispatch({
+    //     type: actionEnum.registrationRequested,
+    //     challenge
+    //   });
+    // } else {
+    //   console.error(response);
+    // }
   };
 
   const handleError = event => {

@@ -3,8 +3,8 @@ import { findByChallenge, addKeyToUser } from '../../db/user';
 
 export default async (req, res) => {
   try {
-    const { key, challenge } = parseRegisterRequest(req.body);
-
+    const body = JSON.parse(req.body);
+    const { key, challenge } = parseRegisterRequest(body);
     const user = await findByChallenge(challenge);
 
     console.log(user);
