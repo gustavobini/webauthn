@@ -79,12 +79,14 @@ export default function Main() {
         });
       } else {
         const errorBody = await response.json();
-        alert(`${response.status} - ${JSON.parse(errorBody)}`);
+        alert(response.status);
+        alert(`${errorBody} - ${JSON.stringify(errorBody)}`);
         dispatch({
           type: actionEnum.registrationError
         });
       }
     } catch (error) {
+      alert(error);
       if (error instanceof DOMException) {
         // DOMException: The operation either timed out or was not allowed.
       }
@@ -140,6 +142,9 @@ export default function Main() {
           <button type="button" onClick={handleWebAuthnRequest}>
             Cadastre seu fator de autenticação
           </button>
+        )}
+        {state.status === statusEnum.userRegistered && (
+          <h1>Cadastro concluído</h1>
         )}
         {state.status === statusEnum.error && (
           <button type="button" onClick={handleError}>
