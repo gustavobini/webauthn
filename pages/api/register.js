@@ -7,17 +7,14 @@ export default async (req, res) => {
     const { key, challenge } = parseRegisterRequest(body);
     const user = await findByChallenge(challenge);
 
-    console.log(user);
-
     if (!user) {
-      return res.status(400);
+      return res.status(404);
     }
 
     await addKeyToUser({ user, key });
 
     res.status(200);
   } catch (error) {
-    console.error(error);
     res.status(400).json(error);
   }
 };

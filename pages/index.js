@@ -78,6 +78,7 @@ export default function Main() {
           type: actionEnum.registrationCompleted
         });
       } else {
+        alert(response.status);
         dispatch({
           type: actionEnum.registrationError
         });
