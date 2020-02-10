@@ -16,9 +16,25 @@ export async function createUser({ id, email, challenge }) {
   );
 }
 
-export function findByChallenge() {}
+export async function findByChallenge(challenge) {
+  const dbResponse = await dbClient().query(
+    q.Get(q.Match(q.Index('users_by_challenge'), challenge))
+  );
 
-export function addKeyToUser() {}
+  console.log(dbResponse);
+
+  return dbResponse.data;
+}
+
+export async function addKeyToUser({ user, key }) {
+  const dbResponse = await dbClient().query(
+    q.Update(q.Ref(q.Collection('user'), user.id), {
+      data: { key }
+    })
+  );
+
+  console.log(dbResponse);
+}
 
 export function findByEmail() {}
 

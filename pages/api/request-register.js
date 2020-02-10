@@ -13,7 +13,7 @@ export default async (req, res) => {
       user: { id, name: email }
     });
 
-    await createUser({ email, challenge: challengeResponse.challenge });
+    await createUser({ id, email, challenge: challengeResponse.challenge });
 
     res.status(200).json(challengeResponse);
   } catch (error) {
