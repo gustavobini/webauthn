@@ -1,5 +1,4 @@
 import faunadb from 'faunadb';
-import uuid from 'uuid/v4';
 
 const q = faunadb.query;
 
@@ -11,18 +10,10 @@ function dbClient() {
   return client;
 }
 
-export async function createUser({ email, challenge }) {
-  try {
-    const id = uuid();
-    const dbResponse = await dbClient().query(
-      q.Create(q.Collection('user'), { data: { id, email, challenge } })
-    );
-
-    console.log(dbResponse);
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
+export async function createUser({ id, email, challenge }) {
+  const dbResponse = await dbClient().query(
+    q.Create(q.Collection('user'), { data: { id, email, challenge } })
+  );
 }
 
 export function findByChallenge() {}

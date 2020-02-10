@@ -1,14 +1,16 @@
+import uuid from 'uuid/v4';
 import { generateRegistrationChallenge } from '@webauthn/server';
+
 import { createUser } from '../../db/user';
 import { rpConfig } from '../../relying-party/config';
 
 export default async (req, res) => {
-  const { email } = JSON.parse(req.body);
-
   try {
+    const { email } = JSON.parse(req.body);
+    const id = uuid();
     const challengeResponse = generateRegistrationChallenge({
       relyingParty: { name: rpConfig.name },
-      user: { name: email }
+      user: { id, name: email }
     });
 
     await createUser({ email, challenge: challengeResponse.challenge });
