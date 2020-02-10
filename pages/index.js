@@ -105,7 +105,6 @@ export default function Main() {
     const response = await fetch('/api/request-register', {
       method: 'POST',
       body: JSON.stringify({
-        id: new Date().valueOf().toString(),
         email: inputEmailRef.current.value
       })
     });
