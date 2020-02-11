@@ -1,4 +1,4 @@
-import faunadb from 'faunadb';
+import faunadb from "faunadb";
 
 const q = faunadb.query;
 
@@ -12,26 +12,24 @@ function dbClient() {
 
 export async function createUser({ id, email, challenge }) {
   const dbResponse = await dbClient().query(
-    q.Create(q.Collection('user'), { data: { id, email, challenge } })
+    q.Create(q.Collection("user"), { data: { id, email, challenge } })
   );
 }
 
 export async function findByChallenge(challenge) {
   const dbResponse = await dbClient().query(
-    q.Get(q.Match(q.Index('users_by_challenge'), challenge))
+    q.Get(q.Match(q.Index("users_by_challenge"), challenge))
   );
 
-  console.log(dbResponse);
-
-  return dbResponse.data;
+  return dbResponse;
 }
 
 export async function addKeyToUser({ user, key }) {
-  const dbResponse = await dbClient().query(user.ref, {
-    data: { key }
-  });
-
-  console.log(dbResponse);
+  const dbResponse = await dbClient().query(
+    q.Update(user.ref, {
+      data: { key }
+    })
+  );
 }
 
 export function findByEmail() {}

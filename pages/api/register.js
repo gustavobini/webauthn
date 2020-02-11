@@ -1,5 +1,5 @@
-import { parseRegisterRequest } from '@webauthn/server';
-import { findByChallenge, addKeyToUser } from '../../db/user';
+import { parseRegisterRequest } from "@webauthn/server";
+import { findByChallenge, addKeyToUser } from "../../db/user";
 
 export default async (req, res) => {
   try {
@@ -8,12 +8,12 @@ export default async (req, res) => {
     const user = await findByChallenge(challenge);
 
     if (!user) {
-      return res.status(404);
+      return res.status(404).end();
     }
 
     await addKeyToUser({ user, key });
 
-    res.status(200);
+    res.status(200).end();
   } catch (error) {
     res.status(400).json(error);
   }

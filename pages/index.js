@@ -1,19 +1,19 @@
-import React, { useEffect, useReducer, useRef } from 'react';
-import Head from 'next/head';
+import React, { useEffect, useReducer, useRef } from "react";
+import Head from "next/head";
 
-import { solveRegistrationChallenge } from '@webauthn/client';
+import { solveRegistrationChallenge } from "@webauthn/client";
 
 const statusEnum = {
-  registeringUser: 'registeringUser',
-  promptingWebAuthn: 'promptingWebAuthn',
-  userRegistered: 'userRegistered',
-  error: 'error'
+  registeringUser: "registeringUser",
+  promptingWebAuthn: "promptingWebAuthn",
+  userRegistered: "userRegistered",
+  error: "error"
 };
 
 const actionEnum = {
-  registrationRequested: 'registrationRequested',
-  registrationCompleted: 'registrationCompleted',
-  restart: 'restart'
+  registrationRequested: "registrationRequested",
+  registrationCompleted: "registrationCompleted",
+  restart: "restart"
 };
 
 function reducer(state, action) {
@@ -66,8 +66,8 @@ export default function Main() {
     try {
       const credentials = await solveRegistrationChallenge(state.challenge);
 
-      const response = await fetch('/api/register', {
-        method: 'POST',
+      const response = await fetch("/api/register", {
+        method: "POST",
         body: JSON.stringify({
           credentials
         })
@@ -78,15 +78,11 @@ export default function Main() {
           type: actionEnum.registrationCompleted
         });
       } else {
-        const errorBody = await response.json();
-        alert(response.status);
-        alert(`${errorBody} - ${JSON.stringify(errorBody)}`);
         dispatch({
           type: actionEnum.registrationError
         });
       }
     } catch (error) {
-      alert(error);
       if (error instanceof DOMException) {
         // DOMException: The operation either timed out or was not allowed.
       }
@@ -96,8 +92,8 @@ export default function Main() {
   const handleSubmit = async event => {
     event.preventDefault();
 
-    const response = await fetch('/api/request-register', {
-      method: 'POST',
+    const response = await fetch("/api/request-register", {
+      method: "POST",
       body: JSON.stringify({
         email: inputEmailRef.current.value
       })
