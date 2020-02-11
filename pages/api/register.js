@@ -7,7 +7,7 @@ export default async (req, res) => {
     const { key, challenge } = parseRegisterRequest(body);
     const user = await findByChallenge(challenge);
 
-    console.log({ user });
+    console.error({ user });
 
     if (!user) {
       return res.status(404).end();
