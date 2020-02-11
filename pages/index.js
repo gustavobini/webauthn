@@ -65,7 +65,11 @@ export default function Main() {
   const handleWebAuthnRequest = async () => {
     try {
       const credentials = await solveRegistrationChallenge(state.challenge);
-
+      alert(
+        JSON.stringify({
+          credentials
+        })
+      );
       const response = await fetch("/api/register", {
         method: "POST",
         body: JSON.stringify({
