@@ -11,7 +11,7 @@ function dbClient() {
 }
 
 export async function createUser({ id, email, challenge }) {
-  const dbResponse = await dbClient().query(
+  await dbClient().query(
     q.Create(q.Collection("user"), { data: { id, email, challenge } })
   );
 }
@@ -25,15 +25,15 @@ export async function findByChallenge(challenge) {
 }
 
 export async function addKeyToUser({ user, key }) {
-  console.error("addKeyToUser", { user });
+  const userz = await findByChallenge(
+    "Gy0TqvT6DdmdTpDIbabelQJaNmHmD+Ad52P9N7llUCE="
+  );
 
-  const dbResponse = await dbClient().query(
-    q.Update(user.ref, {
+  await dbClient().query(
+    q.Update(userz.ref, {
       data: { key }
     })
   );
-
-  console.error(dbResponse);
 }
 
 export function findByEmail() {}
