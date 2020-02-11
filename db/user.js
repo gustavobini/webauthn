@@ -25,6 +25,8 @@ export async function findByChallenge(challenge) {
 }
 
 export async function addKeyToUser({ user, key }) {
+  console.log("addKeyToUser", { user });
+
   const dbResponse = await dbClient().query(
     q.Update(user.ref, {
       data: { key }
