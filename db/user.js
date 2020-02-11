@@ -30,6 +30,8 @@ export async function addKeyToUser({ user, key }) {
       data: { key }
     })
   );
+
+  console.log(dbResponse);
 }
 
 export function findByEmail() {}
